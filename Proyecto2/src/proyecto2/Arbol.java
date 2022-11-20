@@ -15,6 +15,15 @@ public class Arbol <T> {
         raiz = null;
     }
 
+    public Arbol(String x){
+        NodoAB nuevo = new NodoAB(x);
+        raiz = nuevo;
+    }
+
+    public Arbol(NodoAB x){
+        raiz = x;
+    }
+
     public NodoAB<T> getRaiz() {
         return raiz;
     }
@@ -83,85 +92,6 @@ public class Arbol <T> {
         }
     } 
 
-    public boolean igualEstructura(NodoAB raiz2){
-        return this.igualEstructura(this.getRaiz(), raiz2);
-    }
-
-    public boolean igualEstructura(NodoAB raiz1, NodoAB raiz2){
-        boolean igual = true;
-
-        if(raiz1 == null || raiz2 == null){
-            return false;
-        }
-        if((raiz1.getHijo_izq() != null || raiz2.getHijo_izq() != null) && igual){
-            igual = igualEstructura(raiz1.getHijo_izq(), raiz2.getHijo_izq());
-        }
-        if((raiz1.getHijo_der() != null || raiz2.getHijo_der() != null) && igual){
-            igual = igualEstructura(raiz1.getHijo_der(), raiz2.getHijo_der());
-        }
-
-        return igual;
-    }
-
-    public boolean igualValor(NodoAB raiz2){
-        return igualValor(this.getRaiz(), raiz2);
-    }
-
-    public boolean igualValor(NodoAB raiz1, NodoAB raiz2){
-        boolean igual = true;
-
-        if(raiz1 == null || raiz2 == null || !raiz1.getData().equals(raiz2.getData())){
-            return false;
-        }
-        if((raiz1.getHijo_izq() != null || raiz2.getHijo_izq() != null) && igual){
-            igual = igualValor(raiz1.getHijo_izq(), raiz2.getHijo_izq());
-        }
-        if((raiz1.getHijo_der() != null || raiz2.getHijo_der() != null) && igual){
-            igual = igualValor(raiz1.getHijo_der(), raiz2.getHijo_der());
-        }
-
-        return igual;
-    }
-
-    public boolean espejoEstructura(NodoAB raiz2){
-        return this.espejoEstructura(this.getRaiz(), raiz2);
-    }
-
-    public boolean espejoEstructura(NodoAB raiz1, NodoAB raiz2){
-        boolean igual = true;
-
-        if(raiz1 == null || raiz2 == null){
-            return false;
-        }
-        if((raiz1.getHijo_izq() != null || raiz2.getHijo_der() != null) && igual){
-            igual = espejoEstructura(raiz1.getHijo_izq(), raiz2.getHijo_der());
-        }
-        if((raiz1.getHijo_der() != null || raiz2.getHijo_izq() != null) && igual){
-            igual = espejoEstructura(raiz1.getHijo_der(), raiz2.getHijo_izq());
-        }
-
-        return igual;
-    }
-
-    public boolean espejoValor(NodoAB raiz2){
-        return this.espejoValor(this.getRaiz(), raiz2);
-    }
-
-    public boolean espejoValor(NodoAB raiz1, NodoAB raiz2){
-        boolean igual = true;
-
-        if(raiz1 == null || raiz2 == null || !raiz1.getData().equals(raiz2.getData())){
-            return false;
-        }
-        if((raiz1.getHijo_izq() != null || raiz2.getHijo_der() != null) && igual){
-            igual = espejoValor(raiz1.getHijo_izq(), raiz2.getHijo_der());
-        }
-        if((raiz1.getHijo_der() != null || raiz2.getHijo_izq() != null) && igual){
-            igual = espejoValor(raiz1.getHijo_der(), raiz2.getHijo_izq());
-        }
-
-        return igual;
-    }
 
 
     public String preorden(){
@@ -169,7 +99,7 @@ public class Arbol <T> {
     }
 
     public String preorden(NodoAB raiz, String ruta){
-        ruta += raiz.getData() + ",";
+        ruta += raiz.getData();
         if(raiz.getHijo_izq() != null){
             ruta = preorden(raiz.getHijo_izq(), ruta);
         }
@@ -188,7 +118,7 @@ public class Arbol <T> {
         if(raiz.getHijo_izq() != null){
             ruta = inorden(raiz.getHijo_izq(), ruta);
         }
-        ruta += raiz.getData() + ",";
+        ruta += raiz.getData();
         if(raiz.getHijo_der() != null){
             ruta = inorden(raiz.getHijo_der(), ruta);
         }
@@ -207,9 +137,38 @@ public class Arbol <T> {
         if(raiz.getHijo_der() != null){
             ruta = postOrden(raiz.getHijo_der(), ruta);
         }
-        ruta += raiz.getData() + ",";
+        ruta += raiz.getData();
 
         return ruta;
+    }
+
+    public void crearArbol(String exp){
+        String[] parts = exp.split("|");
+        Pila pila = new Pila();
+        for (int i = 0; i < parts.length; i++) {
+            if(parts[i].equals("+") || parts[i].equals("-") || parts[i].equals("*") || parts[i].equals("/") || parts[i].equals("^")){
+
+                NodoAB padre = new NodoAB(parts[i]);
+                NodoAB hijoDer = pila.getpCima().getpArbol().getRaiz();
+                pila.Desapilar();
+                NodoAB hijoIzq = pila.getpCima().getpArbol().getRaiz();
+                pila.Desapilar();
+                padre.setHijo_der(hijoDer);
+                padre.setHijo_izq(hijoIzq);
+                Arbol aux = new Arbol(padre);
+                pila.Apilar(aux);
+
+            }else{
+                NodoAB nAux = new NodoAB(parts[i]);
+                Arbol aux = new Arbol(nAux);
+                pila.Apilar(aux);
+            }
+        }
+        Arbol pAux = pila.getpCima().getpArbol();
+        System.out.println(pAux.inorden());
+        System.out.println(pAux.postOrden());
+        System.out.println(pAux.preorden());
+
     }
 
 }

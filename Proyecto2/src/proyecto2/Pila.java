@@ -55,6 +55,17 @@ public class Pila <T> {
         size++;
     }
 
+    public void Apilar(Arbol x){
+        Nodo nuevo = new Nodo(x);
+        if(this.esVacio()){
+            pCima = nuevo;
+        } else{
+            nuevo.setpNext(pCima);
+            pCima = nuevo;
+        }
+        size++;
+    }
+
     public void Desapilar(){
         if(this.esVacio()){
             JOptionPane.showMessageDialog(null,"Esta pila esta vaciia");

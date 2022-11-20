@@ -64,9 +64,8 @@ public class Interfaz extends javax.swing.JFrame {
             BufferedReader br = new BufferedReader(fr);
             String linea = br.readLine();
             JOptionPane.showMessageDialog(null, linea);
-            String exp = pila.infijaToPosfija(linea);
-            pila.Vaciar();
-            pila.evaluarPosfija(exp);
+            Arbol arbol = new Arbol();
+            arbol.crearArbol(linea);
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Atención: Ha ocurrido un error leyendo el archivo de texto");

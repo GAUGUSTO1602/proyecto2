@@ -9,25 +9,26 @@ package proyecto2;
  * @author veronica
  */
 public class NodoAB <T> {
-    private T data;
+    private String data;
     private NodoAB <T> Padre;
     private NodoAB <T> hijo_izq;
     private NodoAB <T> hijo_der;
 
-    public NodoAB(T o){
+    public NodoAB(String o){
         data = o;
         Padre = null;
         hijo_izq = null;
         hijo_der = null;
     }
 
-    public T getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(String data) {
         this.data = data;
     }
+
 
     public NodoAB<T> getPadre() {
         return Padre;

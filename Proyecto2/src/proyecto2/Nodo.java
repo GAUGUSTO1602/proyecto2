@@ -10,12 +10,27 @@ package proyecto2;
  */
 public class Nodo <T> {
     private String data;
+    private Arbol pArbol;
     private Nodo <T> pNext;
 
     public Nodo(String o){
         data = o;
         pNext = null;
     }
+
+    public Nodo(Arbol o){
+        pArbol = o;
+    }
+
+    public Arbol getpArbol() {
+        return pArbol;
+    }
+
+    public void setpArbol(Arbol pArbol) {
+        this.pArbol = pArbol;
+    }
+
+
 
     public String getData() {
         return data;
