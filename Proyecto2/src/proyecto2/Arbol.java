@@ -142,7 +142,7 @@ public class Arbol <T> {
         return ruta;
     }
 
-    public void crearArbol(String exp){
+    public Arbol crearArbol(String exp){
         String[] parts = exp.split("|");
         Pila pila = new Pila();
         for (int i = 0; i < parts.length; i++) {
@@ -168,7 +168,7 @@ public class Arbol <T> {
         System.out.println(pAux.inorden());
         System.out.println(pAux.postOrden());
         System.out.println(pAux.preorden());
-
+        return pAux;
     }
 
 }

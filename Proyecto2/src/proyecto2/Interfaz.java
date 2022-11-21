@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -64,8 +65,18 @@ public class Interfaz extends javax.swing.JFrame {
             BufferedReader br = new BufferedReader(fr);
             String linea = br.readLine();
             JOptionPane.showMessageDialog(null, linea);
+
+
             Arbol arbol = new Arbol();
-            arbol.crearArbol(linea);
+            arbol = arbol.crearArbol(linea);
+            Lienzo l = new Lienzo();
+            Controlador c = new Controlador(l, arbol);
+            c.iniciar();
+            JFrame ventana = new JFrame();
+            ventana.getContentPane().add(l);
+            ventana.setDefaultCloseOperation(2);
+            ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            ventana.setVisible(true);
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Atención: Ha ocurrido un error leyendo el archivo de texto");

@@ -54,7 +54,16 @@ public class NodoAB <T> {
         this.hijo_izq = hijo_izq;
     }
 
-    
+    public int nodosCompletos(NodoAB n){
+        if(n == null){
+            return 0;
+        }else{
+            if(n.getHijo_izq() != null && n.getHijo_der() != null){
+                return nodosCompletos(n.getHijo_izq()) + nodosCompletos(n.getHijo_der()) + 1;
+            }
+            return nodosCompletos(n.getHijo_izq()) + nodosCompletos(n.getHijo_der());      
+        }
+    }
 
 
 }
