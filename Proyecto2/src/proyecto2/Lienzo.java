@@ -9,15 +9,31 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 /**
- *
+ * Clase para dibujar el arbol binario
  * @author veronica
  */
 public class Lienzo extends JPanel{
     private Arbol objArbol;
+
+    /**
+     *
+     */
     public static final int Diametro = 20;
+
+    /**
+     *
+     */
     public static final int Radio = Diametro/2;
+
+    /**
+     *
+     */
     public static final int Ancho = 30;
 
+    /**
+     *
+     * @param objArbol
+     */
     public void setObjArbol(Arbol objArbol) {
         this.objArbol = objArbol;
         repaint();
@@ -30,6 +46,15 @@ public class Lienzo extends JPanel{
 
     }
 
+    /**
+    * Método para dibujar el arbol binario
+    * @param g
+    * @param x
+    * @param y
+    * @param n
+    * @param a
+     * @return
+     */
     private void pintar(Graphics g, int x, int y, NodoAB n, Arbol a){
         if(n == null){
             g.drawString("Recorridos:", 20, 400);

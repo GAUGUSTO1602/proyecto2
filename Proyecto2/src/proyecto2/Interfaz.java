@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author veronica
+ * @author Gabriel González
  */
 public class Interfaz extends javax.swing.JFrame {
 
@@ -57,6 +57,9 @@ public class Interfaz extends javax.swing.JFrame {
     private void leerTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leerTxtActionPerformed
         // TODO add your handling code here:
         Pila pila = new Pila();
+        Arbol arbol = new Arbol();
+        Boolean prueba = true;
+
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(null);
         File archivo = fc.getSelectedFile();
@@ -64,22 +67,51 @@ public class Interfaz extends javax.swing.JFrame {
             FileReader fr = new FileReader (archivo);
             BufferedReader br = new BufferedReader(fr);
             String linea = br.readLine();
-            JOptionPane.showMessageDialog(null, linea);
+
+            String[] parts = linea.split("|");
+            String prueba1 = parts[0];
+
+            Integer indice = parts.length -1;
+            String prueba2 = parts[indice];
+
+            if(prueba1.equals("+") || prueba1.equals("-") || prueba1.equals("*") || prueba1.equals("/") || prueba1.equals("^")){
+                NodoAB aux = new NodoAB(parts[0]);
+                arbol.setRaiz(aux);
+                arbol.preArbol(arbol.getRaiz(), 1, parts);
+
+            }else if(prueba2.equals("+") || prueba2.equals("-") || prueba2.equals("*") || prueba2.equals("/") || prueba2.equals("^")){
+                prueba = pila.evaluarPosfija(linea);
+                if(prueba == true){
+                    arbol = arbol.crearArbol(linea);
+                }
+
+            }else{
+                String pos = pila.infijaToPosfija(linea);
+                System.out.println(pos);
+                pila.Vaciar();
+                prueba = pila.evaluarPosfija(pos);
+                if(prueba == true){
+                    arbol = arbol.crearArbol(pos);
+                }
+            }
 
 
-            Arbol arbol = new Arbol();
-            arbol = arbol.crearArbol(linea);
-            Lienzo l = new Lienzo();
-            Controlador c = new Controlador(l, arbol);
-            c.iniciar();
-            JFrame ventana = new JFrame();
-            ventana.getContentPane().add(l);
-            ventana.setDefaultCloseOperation(2);
-            ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            ventana.setVisible(true);
+
+            if(prueba == true){
+                Lienzo l = new Lienzo();
+                Controlador c = new Controlador(l, arbol);
+                c.iniciar();
+                JFrame ventana = new JFrame();
+                ventana.getContentPane().add(l);
+                ventana.setDefaultCloseOperation(2);
+                ventana.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                ventana.setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null, "Error: Ha ocurrido un error leyendo el archivo de texto o la expresión introducida no es valida");
+            }
             
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Atención: Ha ocurrido un error leyendo el archivo de texto");
+            JOptionPane.showMessageDialog(null, "Error: Ha ocurrido un error leyendo el archivo de texto o la expresión introducida no es valida");
         }
     }//GEN-LAST:event_leerTxtActionPerformed
 

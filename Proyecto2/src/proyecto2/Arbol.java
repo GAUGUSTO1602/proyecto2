@@ -5,99 +5,75 @@
 package proyecto2;
 
 /**
- *
- * @author veronica
+ *  Clase arbol de tipo binario
+ * @author Gabriel González
+ * @param <T>
  */
 public class Arbol <T> {
     private NodoAB <T> raiz;
 
+    /**
+     *
+     */
     public Arbol(){
         raiz = null;
     }
 
+    /**
+     *
+     * @param x
+     */
     public Arbol(String x){
         NodoAB nuevo = new NodoAB(x);
         raiz = nuevo;
     }
 
+    /**
+     *
+     * @param x
+     */
     public Arbol(NodoAB x){
         raiz = x;
     }
 
+    /**
+     *
+     * @return
+     */
     public NodoAB<T> getRaiz() {
         return raiz;
     }
 
+    /**
+     *
+     * @param raiz
+     */
     public void setRaiz(NodoAB<T> raiz) {
         this.raiz = raiz;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean esVacio(){
         return raiz == null;
     }
 
-    public NodoAB buscarPadre(NodoAB raiz, String padre){
-        NodoAB encontrado = null;
-        if(raiz.getData() == padre){
-            return raiz;
-        }
-        if(raiz.getHijo_izq() != null && encontrado == null){
-            encontrado = buscarPadre(raiz.getHijo_izq(), padre);
-        }
-        if(raiz.getHijo_der() != null && encontrado == null){
-            encontrado = buscarPadre(raiz.getHijo_der(), padre);
-        }
-
-        return encontrado;
-    }
-
-    public void añadirNodo(String hijo, String padre, String side){
-        NodoAB nHijo = new NodoAB(hijo);
-        if(this.esVacio()){
-            this.raiz = nHijo;
-        } else{
-            NodoAB nPadre = buscarPadre(this.raiz, padre);
-            if(nPadre == null){
-                System.out.println("El padre no existe");
-            } else if(side == "left" && nPadre.getHijo_izq() == null){
-                nPadre.setHijo_izq(nHijo);
-            } else if(side == "right" && nPadre.getHijo_der() == null){
-                nPadre.setHijo_der(nHijo);
-            } else{
-                System.out.println("Ambos hijos estn llenos");
-            }
-        }
-    }
-
-    public void borrarHijo(NodoAB n){
-        if(n != null){
-            n.setHijo_der(null);
-            n.setHijo_izq(null);
-        }
-    }
-
-    public void borrarNivel(int nivel){
-        this.borrarNivel(this.raiz, nivel, 1);
-    }
-
-    public void borrarNivel(NodoAB raiz, int nivel, int nivelActual){
-        if(nivel == nivelActual){
-            this.borrarHijo(raiz);
-        }
-        if(raiz.getHijo_izq() != null){
-            this.borrarNivel(raiz, nivel, nivelActual + 1);
-        }
-        if(raiz.getHijo_der() != null){
-            this.borrarNivel(raiz, nivel, nivelActual + 1);
-        }
-    } 
-
-
-
+    /**
+     * Método para recorrer un arbol binario en preorden
+     * @return
+     */
     public String preorden(){
         return preorden(this.getRaiz(), "");
     }
 
+    /**
+     * Método para recorrer un arbol binario en preorden
+     * @param raiz
+     * @param ruta
+     * @return
+     */
     public String preorden(NodoAB raiz, String ruta){
         ruta += raiz.getData();
         if(raiz.getHijo_izq() != null){
@@ -110,10 +86,20 @@ public class Arbol <T> {
         return ruta;
     }
 
+    /**
+     * Método para recorrer un arbol binario en inorden
+     * @return
+     */
     public String inorden(){
         return inorden(this.getRaiz(), "");
     }
 
+    /**
+     * Método para recorrer un arbol binario en inorden
+     * @param raiz
+     * @param ruta
+     * @return
+     */
     public String inorden(NodoAB raiz, String ruta){
         if(raiz.getHijo_izq() != null){
             ruta = inorden(raiz.getHijo_izq(), ruta);
@@ -126,10 +112,20 @@ public class Arbol <T> {
         return ruta;
     }
 
+    /**
+     * Método para recorrer un arbol binario en posorden
+     * @return
+     */
     public String postOrden(){
         return postOrden(this.getRaiz(), "");
     }
 
+    /**
+     * Método para recorrer un arbol binario en posorden
+     * @param raiz
+     * @param ruta
+     * @return
+     */
     public String postOrden(NodoAB raiz, String ruta){
         if(raiz.getHijo_izq() != null){
             ruta = postOrden(raiz.getHijo_izq(), ruta);
@@ -142,6 +138,11 @@ public class Arbol <T> {
         return ruta;
     }
 
+    /**
+     * Crea un arbol binario a traves de una expresión postfija/polaca inversa
+     * @param exp
+     * @return
+     */
     public Arbol crearArbol(String exp){
         String[] parts = exp.split("|");
         Pila pila = new Pila();
@@ -165,10 +166,70 @@ public class Arbol <T> {
             }
         }
         Arbol pAux = pila.getpCima().getpArbol();
-        System.out.println(pAux.inorden());
-        System.out.println(pAux.postOrden());
-        System.out.println(pAux.preorden());
+
         return pAux;
+    }
+
+    /**
+     * Crea un arbol binario a traves de una expresioón prefija/polaca
+¨    * Si el algoritmo falla es porque la expresión prefija introducida no es valida
+     * @param n
+     * @param i
+     * @param exp
+     */
+    public void preArbol(NodoAB n, Integer i, String[] exp){
+        if(i == exp.length){
+        }else if(exp[i].equals("+") || exp[i].equals("-") || exp[i].equals("*") || exp[i].equals("/") || exp[i].equals("^")){
+            NodoAB nuevo = new NodoAB(exp[i]);
+            n.setHijo_izq(nuevo);
+            nuevo.setPadre(n);
+            i = i +1;
+            preArbol(nuevo, i, exp);
+        }else{
+            NodoAB nuevo = new NodoAB(exp[i]);
+            n.setHijo_izq(nuevo);
+            nuevo.setPadre(n);
+            while(n.getHijo_der() != null){
+                n = n.getPadre();
+            }
+            i = i +1;
+            NodoAB nuevo2 = new NodoAB(exp[i]);
+            n.setHijo_der(nuevo2);
+            nuevo2.setPadre(n);
+            if(exp[i].equals("+") || exp[i].equals("-") || exp[i].equals("*") || exp[i].equals("/") || exp[i].equals("^")){
+                preArbol(nuevo2, i + 1, exp);
+                
+            }else{
+                if(i == exp.length - 1){
+                }else{
+                    nuevo2 = nuevo2.getPadre();
+                    while(nuevo2.getHijo_der() != null){
+                        nuevo2 = nuevo2.getPadre();
+                    }
+                    i = i +1;
+                    NodoAB nuevo3 = new NodoAB(exp[i]);
+                    nuevo2.setHijo_der(nuevo3);
+                    nuevo3.setPadre(nuevo2);
+                    if(i == exp.length - 1){
+                    }else if(nuevo3.getData() != null && (!nuevo3.getData().equals("+") && !nuevo3.getData().equals("-") && !nuevo3.getData().equals("*") && !nuevo3.getData().equals("/") && !nuevo3.getData().equals("^"))){
+                        nuevo3 = nuevo3.getPadre();
+                        while(nuevo3.getHijo_der() != null){
+                            nuevo3 = nuevo3.getPadre();
+                        }
+                        i = i + 1;
+                        NodoAB nuevo4 = new NodoAB(exp[i]);
+                        nuevo3.setHijo_der(nuevo4);
+                        nuevo4.setPadre(nuevo3);
+                        preArbol(nuevo4, i + 1, exp);
+                    }else{
+                        preArbol(nuevo3, i + 1, exp);
+                    }
+                    
+                } 
+            }
+
+        }
+
     }
 
 }

@@ -5,18 +5,26 @@
 package proyecto2;
 
 /**
- *
+ * Clase para iniciar el dibujaod del arbol binario
  * @author veronica
  */
 public class Controlador {
     private Lienzo objLienzo;
     private Arbol objArbol;
 
+    /**
+     *
+     * @param l
+     * @param a
+     */
     public Controlador(Lienzo l, Arbol a){
         this.objLienzo = l;
         this.objArbol = a;
     }
 
+    /**
+     *
+     */
     public void iniciar(){
         this.objLienzo.setObjArbol(this.objArbol);
     }
