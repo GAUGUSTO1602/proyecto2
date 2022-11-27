@@ -6,7 +6,7 @@ package proyecto2;
 
 /**
  * Clase para iniciar el dibujaod del arbol binario
- * @author veronica
+ * @author Daniel Fiallo
  */
 public class Controlador {
     private Lienzo objLienzo;

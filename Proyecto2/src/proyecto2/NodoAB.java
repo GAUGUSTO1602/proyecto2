@@ -6,7 +6,7 @@ package proyecto2;
 
 /**
  * Clase nodo para la clase arbol
- * @author Gabriel González
+ * @author Alfredo Herrera
  * @param <T>
  */
 public class NodoAB <T> {

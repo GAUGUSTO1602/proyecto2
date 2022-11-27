@@ -6,7 +6,7 @@ package proyecto2;
 
 /**
  * Clase nodo para las pilas
- * @author veronica
+ * @author Daniel Fiallo
  * @param <T>
  */
 public class Nodo <T> {

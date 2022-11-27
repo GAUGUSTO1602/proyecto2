@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 /**
  * Clase para dibujar el arbol binario
- * @author veronica
+ * @author Alfredo Herrera
  */
 public class Lienzo extends JPanel{
     private Arbol objArbol;
